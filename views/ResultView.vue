@@ -132,9 +132,10 @@ export default {
                         {
                             label: 'Yes',
                             active: () => {
+                                this.play.shift = !this.play.shift;
                                 this.store.storePlay(this.play);
                                 this.store.clearModal();
-                                this.store.changeView(this.play.shift ? 'DiscussionView' : { name: 'CallView', props: { logs: this.logs } });
+                                this.store.changeView(!this.play.shift ? 'DiscussionView' : { name: 'CallView', props: { logs: this.logs } });
                             }
                         },
                         {
@@ -156,6 +157,7 @@ export default {
                         {
                             label: 'Yes',
                             active: () => {
+                                this.play.shift = false;
                                 this.store.storePlay(this.play);
                                 this.store.clearModal();
                                 this.store.changeView('EndView');

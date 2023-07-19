@@ -1,7 +1,7 @@
 <template>
     <v-card id="card">
         <div id="games">
-            <v-expansion-panels>
+            <v-expansion-panels v-if="games.length > 0" class="games">
                 <v-expansion-panel class="game" v-for="(game, index) in games" :key="index">
                     <v-expansion-panel-title>
                         <template v-slot:actions>
@@ -32,6 +32,9 @@
                     </v-expansion-panel-text>
                 </v-expansion-panel>
             </v-expansion-panels>
+            <div v-else class="no-data">
+                Empty
+            </div>
             <div class="btns">
                 <v-btn class="btn" @click="() => store.changeView('FormGameView')"> Create Game </v-btn>
                 <v-btn class="btn" @click="() => { store.changeView('HomeView') }"> Back </v-btn>
@@ -53,6 +56,12 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+
+.games {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .game {
@@ -115,6 +124,14 @@
     border-radius: 0;
     background: rgb(255, 247, 203);
     border-top: 5px solid rgb(87, 140, 255);
+}
+
+.no-data {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
 }
 
 :deep(.v-expansion-panel-text__wrapper) {

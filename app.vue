@@ -41,10 +41,11 @@ body {
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
-  background: rgb(62, 0, 104);
+  background: v-bind(color);
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 #app::-webkit-scrollbar {
@@ -77,6 +78,12 @@ export default {
       let view = this.view;
       return defineAsyncComponent(() => import(`./views/${view.name ? view.name : view}.vue`));
     },
+    shift() {
+      return this.store.getPlay.shift;
+    },
+    color() {
+      return this.shift ? `rgb(234, 245, 204)` : `rgb(62, 0, 104)`;
+    }
   },
   async mounted() {
     await this.getData();

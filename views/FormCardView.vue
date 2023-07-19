@@ -7,15 +7,36 @@
                     <v-text-field class="input" v-model="card.description" label="Card's description"></v-text-field>
                     <v-text-field class="input" v-model="card.code" maxlength="2"
                         :label="`Card's code (${2 - card.code.length} remaining)`"></v-text-field>
-                    <v-text-field class="input" v-model="callInput.firstCall" label="First call"
-                        :append-inner-icon="'mdi-plus-circle'" @click:append-inner="addFirstCall"></v-text-field>
+                    <div class="type-call">
+                        <div class="type-btns">
+                            <v-btn @click="firstType = 0" icon="mdi-account-star" size="x-small"
+                                :color="firstType === 0 ? 'success' : ''"></v-btn>
+                            <v-btn @click="firstType = 1" icon="mdi-target-account" size="x-small"
+                                :color="firstType === 1 ? 'success' : ''"></v-btn>
+                            <v-btn @click="firstType = 2" icon="mdi-thumb-up-outline" size="x-small"
+                                :color="firstType === 2 ? 'success' : ''"></v-btn>
+                        </div>
+                        <v-text-field class="input" v-model="callInput.firstCall" label="First call"
+                            :append-inner-icon="'mdi-plus-circle'" @click:append-inner="addFirstCall"></v-text-field>
+                    </div>
                     <v-item-group>
                         <v-item v-for="(call, index) in card.firstCalls" :key="index">
                             <v-chip @click="() => removeCall(index, true)" class="call">{{ call }}</v-chip>
                         </v-item>
                     </v-item-group>
-                    <v-text-field class="input" v-model="callInput.eachCall" label="Each call"
-                        :append-inner-icon="'mdi-plus-circle'" @click:append-inner="addEachCall"></v-text-field>
+                    <div class="type-call">
+                        <div class="type-btns">
+                            <v-btn @click="eachType = 0" icon="mdi-account-star" size="x-small"
+                                :color="eachType === 0 ? 'success' : ''"></v-btn>
+                            <v-btn @click="eachType = 1" icon="mdi-target-account" size="x-small"
+                                :color="eachType === 1 ? 'success' : ''"></v-btn>
+                            <v-btn @click="eachType = 2" icon="mdi-thumb-up-outline" size="x-small"
+                                :color="eachType === 2 ? 'success' : ''"></v-btn>
+                        </div>
+                        <v-text-field class="input" v-model="callInput.eachCall" label="Each call"
+                            :append-inner-icon="'mdi-plus-circle'" @click:append-inner="addEachCall">
+                        </v-text-field>
+                    </div>
                     <v-item-group>
                         <v-item v-for="(call, index) in card.eachCalls" :key="index">
                             <v-chip @click="() => removeCall(index, false)" class="call">{{ call }}</v-chip>
@@ -67,6 +88,24 @@
     display: none;
 }
 
+.type-call {
+    width: 100%;
+    display: flex;
+}
+
+.type-btns {
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    margin-right: 10px;
+}
+
+.type-call .input {
+    flex: 1;
+}
+
 .call {
     margin: 5px 5px 10px 5px;
 }
@@ -104,6 +143,12 @@ export default {
         editCard: Object
     },
     data: () => ({
+        items: [
+            { title: 'Click Me' },
+            { title: 'Click Me' },
+            { title: 'Click Me' },
+            { title: 'Click Me 2' },
+        ],
         formRules: [
             value => {
                 if (value?.length > 3) return true
@@ -121,7 +166,9 @@ export default {
         callInput: {
             firstCall: null,
             eachCall: null,
-        }
+        },
+        firstType: 0,
+        eachType: 0,
     }),
     mounted() {
         if (this.editCard) Object.assign(this.card, this.editCard);
@@ -144,14 +191,18 @@ export default {
             }
         },
         addFirstCall() {
+            let cases = ['@', '#', '%'];
+            let type = cases[this.firstType]
             if (this.callInput.firstCall) {
-                this.card.firstCalls.push(this.callInput.firstCall);
+                this.card.firstCalls.push(type + this.callInput.firstCall);
                 this.callInput.firstCall = '';
             }
         },
         addEachCall() {
+            let cases = ['@', '#', '%'];
+            let type = cases[this.eachType];
             if (this.callInput.eachCall) {
-                this.card.eachCalls.push(this.callInput.eachCall);
+                this.card.eachCalls.push(type + this.callInput.eachCall);
                 this.callInput.eachCall = '';
             }
         },

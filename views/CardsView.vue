@@ -1,7 +1,7 @@
 <template>
     <v-card id="card">
         <div class="wrapper">
-            <v-expansion-panels v-if="cards.length > 0">
+            <v-expansion-panels v-if="cards.length > 0" class="cards">
                 <v-expansion-panel class="card" v-for="(card, index) in cards" :key="index">
                     <v-expansion-panel-title>
                         <template v-slot:actions>
@@ -51,6 +51,12 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+
+.cards {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .card {

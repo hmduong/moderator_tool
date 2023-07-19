@@ -10,14 +10,6 @@
                 <v-btn @click="quitGame" size="small" icon="mdi-logout" color="purple" class="game-btn"></v-btn>
             </div>
             <v-card class="pins">
-                <v-item-group class="pin-inner">
-                    <strong>pins:</strong>
-                    <v-card class="pin">
-                        <v-item v-for="(log, index) in play.pins" :key="index">
-                            <p>_ {{ log }}</p>
-                        </v-item>
-                    </v-card>
-                </v-item-group>
                 <v-item-group class="log-inner">
                     <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px;">
                         <strong>logs:</strong>
@@ -25,6 +17,9 @@
                             class="game-btn"></v-btn>
                     </div>
                     <v-card class="logs">
+                        <v-item v-for="(log, index) in play.pins" :key="index">
+                            <p><v-icon>mdi-pin</v-icon>{{ log }}</p>
+                        </v-item>
                         <p>Day:</p>
                         <v-item v-for="(log, index) in logs[0]" :key="index">
                             <p>_ {{ log }}</p>
